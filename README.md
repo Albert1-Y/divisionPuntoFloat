@@ -1,24 +1,31 @@
 # divisionPuntoFloat
-Simulación de división en punto flotante IEEE 754 en C++. Descompone float en signo, exponente y significando, realiza la operación binaria paso a paso y muestra el proceso completo, incluyendo normalización, overflow y underflow. Ideal para fines educativos.
 
-# División en Punto Flotante
-
-Este repositorio contiene una implementación en **C/C++** de la división entre dos números en punto flotante (`float`) de 32 bits, siguiendo el estándar IEEE 754. El algoritmo separa los componentes binarios del número (signo, exponente y significando), realiza la operación bit a bit y ensambla el resultado final.
+## Descripción
+Implementación detallada de la división en punto flotante IEEE 754 en C++. Este programa simula manualmente el proceso que realiza la CPU al dividir números de punto flotante, descomponiendo cada número en sus componentes binarios (signo, exponente y significando), realizando las operaciones correspondientes y ensamblando el resultado final.
 
 ## Características
+- Entrada de dos números en formato `float` de 32 bits
+- Descomposición completa en componentes IEEE 754:
+  - 1 bit de signo
+  - 8 bits de exponente
+  - 23 bits de significando
+- Visualización bit a bit de cada componente
+- Implementación detallada del algoritmo conforme al estándar IEEE 754:
+  - Casos especiales (división por cero, cero dividido por cualquier número)
+  - Cálculo del signo resultante mediante XOR
+  - Resta de exponentes en representación sesgada (biased representation)
+  - Detección de overflow/underflow de exponente
+  - División de significandos con precisión extendida
+  - Normalización y redondeo del resultado
+- Comparación con el resultado nativo de C++
+- Salida formateada para visualización educativa
 
-- Entrada de dos números en `float`.
-- Separación de bits: signo, exponente y significando.
-- Resta de exponentes en representación sesgada (biased).
-- División de significandos.
-- Normalización, redondeo y ensamblado final.
-- Verificación contra el resultado nativo (`/`) de C/C++.
-- Visualización de los bits de entrada y salida.
-
-![image](https://github.com/user-attachments/assets/737fa817-1d7a-4fdb-b7a6-e8185c631e7e)
+## Diagrama de flujo del algoritmo
+![Diagrama de flujo de división en punto flotante](https://github.com/user-attachments/assets/737fa817-1d7a-4fdb-b7a6-e8185c631e7e)
 
 ## Ejemplo de ejecución
 
+```
 Ingrese dividendo (a): 15.5
 Ingrese divisor (b): 2.0
 
@@ -58,3 +65,4 @@ Comparación de resultados:
 Resultado emulado:      7.75
 Resultado nativo (C++): 7.75
 ¡Los resultados son idénticos!
+```
