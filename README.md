@@ -3,29 +3,65 @@ Simulación de división en punto flotante IEEE 754 en C++. Descompone float en 
 
 # División en Punto Flotante
 
-Implementación en **C/C++** de la división entre dos números `float` de 32 bits, siguiendo el algoritmo del estándar IEEE 754. El programa separa signo, exponente y significando, realiza la operación bit a bit, y reconstruye el resultado en formato flotante.
+Este repositorio contiene una implementación en **C/C++** de la división entre dos números en punto flotante (`float`) de 32 bits, siguiendo el estándar IEEE 754. El algoritmo separa los componentes binarios del número (signo, exponente y significando), realiza la operación bit a bit y ensambla el resultado final.
 
 ## Características
 
-- Entrada de dos `float` reales.
-- Separación y manejo de componentes binarios.
-- Control de `overflow` y `underflow`.
-- Comparación con la división nativa (`/`).
-- Visualización de patrones de bits (opcional).
+- Entrada de dos números en `float`.
+- Separación de bits: signo, exponente y significando.
+- Resta de exponentes en representación sesgada (biased).
+- División de significandos.
+- Normalización, redondeo y ensamblado final.
+- Verificación contra el resultado nativo (`/`) de C/C++.
+- Visualización de los bits de entrada y salida.
 
-Ingrese el primer número: 15.5
-Ingrese el segundo número: 2.0
+# Ejemplo de ejecución
+Ingrese dividendo (a): 15.5
+Ingrese divisor (b): 2.0
 
-[Entrada]
-X = 15.5 -> Signo: 0 | Exponente: 10000011 | Significand: 11110000000000000000000
-Y = 2.0  -> Signo: 0 | Exponente: 10000000 | Significand: 00000000000000000000000
+--- INICIO DE DIVISIÓN: 15.5 / 2 ---
 
-[Operación]
-Exponente resultado: 10000011 - 10000000 + 01111111 = 10000010
-Significand dividido: 11110000000000000000000 ÷ 00000000000000000000000 = ...
+Descomposición de X = 15.5:
 
-[Resultado final]
-Z = 7.75
-Bits: Signo: 0 | Exponente: 10000010 | Significand: 11100000000000000000000
+punto flotante: 0 10000011 11110000000000000000000
 
-Verificación con operador nativo: 15.5 / 2.0 = 7.75 ✅
+ (valor decimal del exponente: 131)
+
+ (valor decimaldel significando: 7864320)
+
+-----------------------------------------------------------------
+
+Descomposición de Y = 2:
+
+punto flotante: 0 10000000 00000000000000000000000
+
+ (valor decimal del exponente: 128)
+
+ (valor decimaldel significando: 0)
+
+-----------------------------------------------------------------
+
+Signo resultante: 0 (XOR de los signos)
+Resta de exponentes: 131 - 128 + 127 = 130
+Significando X con 1 implícito: 16711680
+Significando Y con 1 implícito: 8388608
+División de significandos: 16711680
+Normalizando: desplazamiento a la derecha
+
+Resultado Z:
+
+punto flotante: 0 10000010 11100000000000000000000
+
+ (valor decimal del exponente: 130)
+
+ (valor decimaldel significando: 7340032)
+
+-----------------------------------------------------------------
+
+Resultado decimal: 7.75
+--- FIN DE LA DIVISIÓN ---
+
+Comparación de resultados:
+Resultado emulado:        7.75
+Resultado nativo (C++):   7.75
+¡Los resultados son idénticos!
